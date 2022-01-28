@@ -16,10 +16,17 @@
         \begin{equation}
             L_1^C \cap L_2 = \{\phi\}
         \end{equation}
-        As regular language is closed under intersection and complement we can find DFAs for languages in eq (2) and eq (3) using $D_1$ and $D_2$. Language accepted by a DFA is ${\phi}$ only when any final state is not reachable from the start state.
+        As regular language is closed under intersection and complement we can find DFAs for languages in eq (2) and eq (3) using $D_1$ and $D_2$. Language accepted by a DFA is ${\phi}$ only when any final state is not reachable from the start state. We will use these claims to design the algorithm for checking if given two DFAs has same language.
         
-        %describe object DFA used in algo
-        
+        We will use a DFA class object in following algorithms. It has following attributes.
+        \begin{enumerate}
+            \item $Q$ is set of states of DFA.
+            \item $q_0$ represent start state
+            \item $\sum$ is alphabet of DFA
+            \item $F$ is set of final states.
+            \item $\delta$ represent transition table for DFA.
+        \end{enumerate}
+        Using the following algorithm we can compute the DFA for complement language.
         \begin{algorithm}[H]
             \caption{Finding DFA of complement of langauge accepted by given DFA $D$}
             \begin{algorithmic}[1]
@@ -28,13 +35,13 @@
                     \State $DC.Q \gets D.Q$
                     \State $DC.q_0 \gets D.q_0$
                     \State $DC.\delta \gets D.\delta$
-                    \State $DC.final \gets D.Q \setminus$ $D.f$
+                    \State $DC.final \gets D.Q \setminus$ $D.f$ \Comment{Non accepting states of $D$}
                     \State{\Return DC}
                 \EndProcedure{}
             \end{algorithmic}
         \end{algorithm}
         
-        DFA of intersection of two languages $L_1$ and $L_2$ accepted by $D_1$ and $D_2$ respectively is given by product of DFAs $D_1$ and $D_2$. We find out the product DFA using the following algorithm.
+        Now we need to find DFA for the intersection of two languages. DFA of intersection of two languages, say $L_1$ and $L_2$ accepted by $D_1$ and $D_2$ respectively is given by product of DFAs $D_1$ and $D_2$. We will compute the product DFA using the following algorithm.
         
         \begin{algorithm}[H]
             \caption{Finding product DFA of two given DFAs}
@@ -54,7 +61,7 @@
             \end{algorithmic}
         \end{algorithm}
         
-        To check whether the language of DFA $D$ is $\{\phi\}$, we will do BFS on $D$ to check if the final state is reachable from start state in some transitions. If final state is not reachable then we can say that language of DFA is $\{\phi\}$
+        Now too check whether the language of a DFA $D$ is $\{\phi\}$, we will do BFS on $D$ to check if the final state is reachable from start state in some transitions. If final state is not reachable then we can say that language of DFA is $\{\phi\}$ as no string would be accepted by $D$.
         
         \begin{algorithm}[H]
             \caption{Checking if any final state is reachable from start state in given DFA $D$}
@@ -87,7 +94,7 @@
             \end{algorithmic}
         \end{algorithm}
         
-        Using the above three procedures and stated algorithm we can check if two DFAs have same language. Following is the pseudo code for the algorithm.
+        Using the above three procedures and stated claims we can check if two DFAs have same language. Following is the pseudo code for the algorithm.
         
         \begin{algorithm}[H]
             \caption{Checking if DFA $D_1$ and $D_2$ recognize same language}
