@@ -22,7 +22,7 @@
         \begin{enumerate}
             \item $Q$ is set of states of DFA.
             \item $q_0$ represent start state
-            \item $\sum$ is alphabet of DFA
+            \item $\Sigma$ is alphabet of DFA
             \item $F$ is set of final states.
             \item $\delta$ represent transition table for DFA.
         \end{enumerate}
@@ -52,7 +52,7 @@
                     \State $D.q_0 \gets (D_1.q_0, D_2.q_0)$
                     \State $D.F \gets D_1.F \times D_2.F$
                     \ForAll{$(q_i, q_j) \in D.Q$}
-                        \ForAll{$a \in D.\sum$}
+                        \ForAll{$a \in D.\Sigma$}
                             \State $D.\delta((q_i, q_j), a) \gets (D_1.\delta(q_i, a), D_2.\delta(q_j, a))$
                         \EndFor{}
                     \EndFor{}

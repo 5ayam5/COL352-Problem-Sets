@@ -28,7 +28,7 @@
             \item $Q'$ is set of all states in $Q$ and the new states introduced as described above.
             \item $q_0' = q_0$
             \item $F' = F$
-            \item $\delta'$ can be defined from $delta$. Replace every transition in $\delta$ with transitions defined in equation 1. 
+            \item $\delta'$ can be defined from $\delta$. Replace every transition in $\delta$ with transitions defined in equation 1. 
         \end{enumerate}
         
         Now we need to prove that language accepted by $N$ is same as $repeat(L)$. We will prove it using the following claim.
@@ -41,7 +41,7 @@
             \[P(i)\ =\ N\ will\ be\ at\ a\ state\ belonging\ to\ Q\ after\ accepting\ character\ l_{2i}\ \forall i\ in\ string s\]
             \textbf{Base case:} For $i = 0$, $N$ will be at start state which is $q_0$ and belongs to $Q$. Hence $P(0)$ holds true.
             \\
-            \textbf{Induction Step:} Lets assume that $P(i)$ is true i.e $N$ is in state belonging to $Q$ after accepting $l_{2i}$. Let the state be $q$. Now on accepting the next character $l_{2i+1}$ it can make transition to only states which were introduced in $N$ from $D$ according to equation 1. Let the state be $q'$ which belong to $Q'/Q$. According to $\delta'$ next state which can be reached from $q'$ is a state which belongs to $Q$. So the next character accepted in string s which is $l_{2i+2}$  will be same as $l_{2i+1}$ and $N$ will make transition to state which belongs to $Q$.\\
+            \textbf{Induction Step:} Lets assume that $P(i)$ is true i.e $N$ is in state belonging to $Q$ after accepting $l_{2i}$. Let the state be $q$. Now on accepting the next character $l_{2i+1}$ it can make transition to only states which were introduced in $N$ from $D$ according to equation 1. Let the state be $q'$ which belong to $Q'\setminus Q$. According to $\delta'$ next state which can be reached from $q'$ is a state which belongs to $Q$. So the next character accepted in string s which is $l_{2i+2}$  will be same as $l_{2i+1}$ and $N$ will make transition to state which belongs to $Q$.\\
             Thus $P(i+1)$ is also true.
             Hence using induction we proves the above claim.
         \end{proof}
@@ -50,7 +50,7 @@
         
         Using the above claims we can state that a string $s$ accepted by $N$ is of the form $l_1l_1l_2l_2...l_kl_k$ where $l_1, l_2,.... l_k \in \Sigma$. As repeat is a bijection from to $L$ to language defined by $repeat(L)$ thus on applying the inverse of $repeat$ operation  on $s$ we get $l_1l_2l_3..l_k$ which belongs to $L$. Hence langauge accepted by $N$ is same as $repeat(L)$.\\
         
-        A $repeat(L)$ is accepted by an NFA, hence the language is regular and regular languages are closed under $repeat$ operation.
+        As $repeat(L)$ is accepted by an NFA, we can conclude that the language is regular and regular languages are closed under $repeat$ operation.
         
     \end{proof}
 \end{solution}

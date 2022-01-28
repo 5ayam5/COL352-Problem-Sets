@@ -12,27 +12,31 @@
         \begin{proof}
             We have a regular language $L$ which implies there exists a DFA representing it. We have to prove it can be recognized by an all-NFA.\\
             \textbf{Proof by deduction: }
-            A DFA has only one final state. Either the string is accepted or the string is rejected based on the single final state. The definition of all-NFAs is that it accepts a string only when the string is accepted by all the possible final states. Since DFA has only one final state it is a type of all-NFA with single final state. Therefore, there exists a DFA which is a subset of all-NFAs.\\
+            Either the string is accepted or the string is rejected based on the run of the DFA which is deterministic. The definition of all-NFAs is that it accepts a string only when the string is accepted by all the possible final states. Since each run of the DFA on a string has only one final state it is a type of all-NFA with single final state (which may be accepting or rejecting). Therefore, a DFA is a subset of all-NFAs.\\
             A regular language is a language which is accepted by a deterministic finite automaton. Since every regular language has a DFA which accepts it, and DFA $\in $ set of all-NFAs; for every regular language there exists an all-NFA which recognizes it.
         \end{proof}
         \begin{claim}
         Every all-NFA recognizes some regular language.
         \end{claim}
         \begin{proof}
-            We have to prove that any language $L$ recognized by all-NFA is a regular language. For a language to be regular, it is to be identified by some finite automaton. Therefore we need to show that an all-NFA can be translated into a DFA (Since every NFA can be converted into a DFA). To do this, we try to find a DFA equivalent to that all-NFA.\\
+            We have to prove that any language $L$ recognized by all-NFA is a regular language. For a language to be regular, it is to be identified by some finite automaton. Therefore we need to show that an all-NFA can be translated into a DFA. To do this, we try to find a DFA equivalent to that all-NFA.\\
             \textbf{Proof by construction: }
             Let the all-NFA which recognizes language $L$ be $N = (Q, \Sigma, \delta, q_0, F)$. Also, let $D = (Q', \Sigma, \delta', q_0', F')$ be a DFA which recognizes $L$ and will imply that $L$ is regular.\\
             Such DFA can be constructed in the following way:
             \begin{enumerate}
                 \item The alphabet $\Sigma$ of both $D$ and $N$ are same to ensure same input strings.
-                \item Since all-NFA requires the string to be accepted for all Final states, the total number of states $Q'$ for DFA will be equal to Power set of $Q$ since DFA will have to consider all possibilities as well.
-                \item Since all-NFA might involve epsilon transitions, to have a DFA version, the transition table $\delta'$ for a state $S$ (set of corresponding states in $N$) will be: \\
-                 \[ \delta'(S, character) =  \bigcup_{s \in S}  \epsilon-closure(\delta(s, character)) \] 
-                 \item helpppppppppppppppppppppppppppppppppppppppppmeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee F' is weird to write
+                \item Since all-NFA requires the string to be accepted for all final states and the DFA will have to consider all possible transitions in all-NFA, the total number of states $Q'$ for DFA will be equal to $power\ set (Q) = 2^Q$.
+                \item Since all-NFA might involve epsilon transitions, to have a DFA version, the transition table $\delta'$ for a state $S$ and letter $a$ (set of corresponding states in $N$) will be:
+                \begin{equation}
+                 \delta'(S, a) =  \bigcup_{s \in S}  \epsilon-closure(\delta(s, a)) 
+                \end{equation}
+                 \item For a string to be accepted, in each run of the all-NFA, the run should end in a state $\in F$. Therefore the possible states $F'$ the string can end up in must be equal to $power\ set (F) = 2^F$.
+                 
             \end{enumerate}
             
+            Following the construction, it can be observed that for any string $x \in \Sigma^*$, let S be the set of all possible states of all-NFA that we can end up in. This should be a subset of $2^F$ for it to be accepted. Our constructed DFA does exactly this. Conversely, each string accepted by $D$ will be accepted by $N$ since the final state in $D$ exactly corresponds to the possible states that a string can end up in $N$.
         \end{proof}
-        Both Claim 2.1 and Claim 2.2 imply that for every regular language, there exists an all-NFA which recognizes and all-NFAs only recognize regular languages. Hence all-NFAs recognize the class of regular languages. Hence proved.
+        Both Claim 2.1 and Claim 2.2 imply that for every regular language, there exists an all-NFA which recognizes the regular language $L$ and all-NFAs only recognize regular languages. Hence all-NFAs recognize the class of regular languages. Hence proved.
         
         
     \end{proof}
