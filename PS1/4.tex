@@ -1,9 +1,108 @@
 \begin{solution}{Question 4}\label{ques:4}
     \begin{question}
-    Question
+    Design an algorithm that takes as input the descriptions of two DFAs, $D_1$ and $D_2$, and
+    determines whether they recognize the same language.
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
-        Solution
+        Let $D_1$ and $D_2$ be two DFAs s.t 
+        \[L(D_1) = L_1 \]
+        \[L(D_2) = L_2 \]
+        If languages $L_1$ and $L_2$ are same then following must hold true
+        \begin{equation}
+            L_1 \cap L_2^C = \{\phi\}
+        \end{equation}
+        and
+        \begin{equation}
+            L_1^C \cap L_2 = \{\phi\}
+        \end{equation}
+        As regular language is closed under intersection and complement we can find DFAs for languages in eq (2) and eq (3) using $D_1$ and $D_2$. Language accepted by a DFA is ${\phi}$ only when any final state is not reachable from the start state.
+        
+        %describe object DFA used in algo
+        
+        \begin{algorithm}[H]
+            \caption{Finding DFA of complement of langauge accepted by given DFA $D$}
+            \begin{algorithmic}[1]
+                \Procedure{complement}{$D$} 
+                    \State $DC \gets$ new DFA
+                    \State $DC.Q \gets D.Q$
+                    \State $DC.q_0 \gets D.q_0$
+                    \State $DC.\delta \gets D.\delta$
+                    \State $DC.final \gets D.Q \setminus$ $D.f$
+                    \State{\Return DC}
+                \EndProcedure{}
+            \end{algorithmic}
+        \end{algorithm}
+        
+        DFA of intersection of two languages $L_1$ and $L_2$ accepted by $D_1$ and $D_2$ respectively is given by product of DFAs $D_1$ and $D_2$. We find out the product DFA using the following algorithm.
+        
+        \begin{algorithm}[H]
+            \caption{Finding product DFA of two given DFAs}
+            \begin{algorithmic}[1]
+                \Procedure{product}{$D_1, D_2$}
+                    \State $D \gets$ new DFA
+                    \State $D.Q \gets D_1.Q \times D_2.Q$
+                    \State $D.q_0 \gets (D_1.q_0, D_2.q_0)$
+                    \State $D.F \gets D_1.F \times D_2.F$
+                    \ForAll{$(q_i, q_j) \in D.Q$}
+                        \ForAll{$a \in D.\sum$}
+                            \State $D.\delta((q_i, q_j), a) \gets (D_1.\delta(q_i, a), D_2.\delta(q_j, a))$
+                        \EndFor{}
+                    \EndFor{}
+                    \State{\Return{$D$}}
+                \EndProcedure{}
+            \end{algorithmic}
+        \end{algorithm}
+        
+        To check whether the language of DFA $D$ is $\{\phi\}$, we will do BFS on $D$ to check if the final state is reachable from start state in some transitions. If final state is not reachable then we can say that language of DFA is $\{\phi\}$
+        
+        \begin{algorithm}[H]
+            \caption{Checking if any final state is reachable from start state in given DFA $D$}
+            \begin{algorithmic}[1]
+                \Procedure{isLanguageEmpty}{$D$}
+                    \State visited $\gets$ init map with every state in $D.Q$ mapping to $0$
+                    \State queue$\gets [D.q_0]$
+                    \State visited[$D.q_0$] $\gets 1$
+                    \State
+                    \While{len(queue) $!= 0$}
+                        \State state $\gets$ queue.pop(0)
+                        \ForAll{$a$ in $D.\sum$}
+                            \If{not visited$[D.\delta(state, a)]$}
+                                \State queue.append($D.\delta(state, a)$)
+                                \State visited$[D.\delta(state, a)]$ = 1
+                            \EndIf{}
+                        \EndFor{}
+                    \EndWhile
+                    \State
+                    \State emptyLanguage $\gets 1$
+                    \ForAll{$q$ in $D.F$}
+                        \If{visited$[q]$}
+                            \State emptyLanguage $\gets 0$
+                            \State break
+                        \EndIf{}
+                    \EndFor{}
+                    \State 
+                    \State{\Return emptyLanguage}
+                \EndProcedure{}
+            \end{algorithmic}
+        \end{algorithm}
+        
+        Using the above three procedures and stated algorithm we can check if two DFAs have same language. Following is the pseudo code for the algorithm.
+        
+        \begin{algorithm}[H]
+            \caption{Checking if DFA $D_1$ and $D_2$ recognize same language}
+            \begin{algorithmic}[1]
+                \Procedure{sameLanguage}{$D_1, D_2$} 
+                    \State $DFA_1 \gets \textsc{PRODUCT}(D_1, \textsc{COMPLEMENT}(D_2))$
+                    \State $DFA_2 \gets \textsc{PRODUCT}(\textsc{COMPLEMENT}(D_1), D_2)$
+                    \State 
+                    \If{$\textsc{EMPTYLANGUAGE}(DFA_1)\ and\ \textsc{EMPTYLANGUAGE}(DFA_2)$}
+                        \State{\Return true}
+                    \EndIf{}
+                    \State{\Return false}
+                \EndProcedure{}
+            \end{algorithmic}
+        \end{algorithm}
+        
     \end{proof}
 \end{solution}
