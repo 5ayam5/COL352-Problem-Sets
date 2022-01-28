@@ -1,9 +1,34 @@
 \begin{solution}{Question 6}\label{ques:6}
-    \begin{question}
-    Question
-    \end{question}
-    \tcblower{}
-    \begin{proof}[Solution]
-        Solution
-    \end{proof}
+	\begin{question}
+		Let $\Sigma$ and $\Gamma$ be two finite alphabets. A function $f: \Sigma^*\to\Gamma^*$ is called a homomorphism if for all $x, y\in \Sigma^*$, $f(x\cdot y) = f(x)\cdot f(y)$. Observe that if $f$ is a string homomorphism, then $f(\epsilon) = \epsilon$, and the values of $f(a)$ for all $a\in \Sigma$ completely determines $f$. Prove that the class of regular languages is closed under homomorphisms. That is, prove that if $L \subseteq \Sigma^*$ is a regular language, then $f(L) = \{f(x) \in \Gamma^* | x \in L\}$ is regular. Try to informally describe how you will start with a DFA for $L$ and get an NFA for $f(L)$.
+	\end{question}
+	\tcblower{}
+	\begin{proof}
+		Consider the regular expression, $R$ of the language $L$. Now, we define $f(R)$ by applying $f$ on each alphabet in $R$.
+		\begin{claim}
+			Any string $w\in f(L)$ is accepted by $f(R)$ and vice versa. We prove this claim using structural induction on the regular expression $R$.
+		\end{claim}
+		\begin{proof}
+			\textbf{Base case:} The claim is trivially true for $R = \epsilon$ and for $R = a$ (for all $a \in \Sigma$)\\
+			\textbf{Inductive Step:} Assume it is true for all regular expressions with number of symbols $\leq i$. A regular expression with $i+1$ symbols will look like one of the following -
+			\begin{enumerate}
+				\item $R_1 + R_2$
+				\item $R_1 \cdot R_2$
+				\item $R_1^*$
+			\end{enumerate}
+			For each of the following cases, induction is true for $R_1$ and $R_2$ (if applicable) since number of symbols in each is $< i$. Also, for each of the cases, we know that for any $w\in f(L_1)$ is accepted by $f(R_1)$ (also for $L_2$ corresponding to $R_2$). Consider the following languages:
+			\begin{enumerate}
+				\item $R_1 + R_2$: For a string to be accepted by $f(R)$, it has to be accepted by either $f(R_1)$ or $f(R_2)$. This will be true iff the string is in $f(L_1)$ or $f(L_2)$. This is true from induction. Therefore, any string in $f(L_1)\cup f(L_2) = f(L_1 \cup L_2) = f(L)$ will be recognised by $f(R) = f(R_1 + R_2)$ and vice versa.
+				\item $R_1 \cdot R_2$: For a string to be accepted by $f(R)$, it has to be of the form $w_1w_2$ where $w_1$ is accepted by $f(R_1)$ and $w_2$ is accepted by $f(R_2)$. Therefore, the language recognised by $f(R)$ is $f(L_1)\cdot f(L_2) = f(L_1\cdot L_2) = f(L)$. Also, any string $w = w_1w_2 \in f(L_1\cdot L_2)$ is recognised by $f(R)$.
+				\item $R_1^*$: This is equivalent to the language $\bigcup_{i=0}^\infty (L_1\cdot L_1 \cdots i\ times\cdots L_1)$ or the regex $\sum_{i=0}(R_1\cdot R_1\cdots i\ times\cdots)$. We have already proved the correctness for concatenation and union. Therefore, we can apply the same for the finite union of the concatenation. Therefore, $f(R_1^*)$ recognises the same language as $f(L_1^*)$.
+			\end{enumerate}
+			Therefore, we have proved the inductive hypothesis and hence the claim.
+		\end{proof}
+		From the above claim, we have shown that regular languages are closed under homomorphism. We now propose the construction of an NFA for $f(L)$.\par
+		Let the DFA of $L$ be $D = (Q, \Sigma, \delta, q_0, F)$. Now construct the following NFA, $N = (Q, \Gamma, \delta', q_0, F)$:
+		\begin{equation}
+			\delta'(q_i, f(a)) = q_j \iff \delta(q_i, a) = q_j
+		\end{equation}
+		The above construction doesn't create an NFA in the strictest sense since each transition can have a sequence of alphabets rather than a single alphabet. In such a case, we can add states for each alphabet connecting the two states $q_i$ and $q_j$.
+	\end{proof}
 \end{solution}
