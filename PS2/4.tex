@@ -8,5 +8,10 @@
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
+      We will show this by contradiction. Consider the language $A = 0^+1^+2^+$. $A$ is regular. Now assume that $A_{\frac{1}{3}-\frac{1}{3}}$ is regular.\par
+      We also know that $B = 0^+2^+$ is regular. Consider the intersection of $A_{\frac{1}{3}-\frac{1}{3}}$ and $B$. We know that this language, say $C$, will only have $0$ and $2$. We will now show that the number of $0$ and number of $2$ in each word of $C$ will be equal.\par
+      Consider any word $w$ in $C$. Consider the corresponding word in $A$ from which we got $w$ in $A_{\frac{1}{3}-\frac{1}{3}}$, call it $w_0 = 0^a1^b2^c$. For the case $a=b=c$, it is trivial that the number of $0$ and $2$ in $w$ will be equal. Otherwise, we know that at least one of $a, b, c$ will be less than $\frac{a+b+c}{3}$. We will now show that if $w\in C$, then $b < \frac{a+b+c}{3}$. Assume that it is not the case. Then, wlog assume that $a$ is the smallest number. Then, in $w$, we will also have $1$ at some positions. However since $w\in C$, such a situation is not possible. Therefore, $\#0=\#2$ in $w$.\par
+      Thus, we have proved that $C \subseteq \{0^n2^n, n > 0\}$. We now show that any word $w$ in $\{0^n2^n, n > 0\}$ will be in $C$. This is easy to see since $0^n1^n2^n$ is in $A$ and thus $0^n2^n$ will be in $C$. Therefore, $C = \{0^n2^n, n > 0\}$\par
+      However, we know that $C$ is non regular. However, from our assumption that $A_{\frac{1}{3}-\frac{1}{3}}$ is regular and $B$ is regular, $C$ must be regular since it is the intersection of $A_{\frac{1}{3}-\frac{1}{3}}$ and $B$. This is a contradiction. Therefore, $A_{\frac{1}{3}-\frac{1}{3}}$ is irregular. Hence, proved.
     \end{proof}
 \end{solution}
