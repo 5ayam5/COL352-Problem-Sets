@@ -8,5 +8,30 @@
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
+      Let the DFA of $A$ be $D = (Q, \Sigma, \delta, q_0, F)$. We propose the following DFA $D_{\frac{1}{2}-} = (Q_{\frac{1}{2}-}, \Sigma, \delta_{\frac{1}{2}-}, {q_0}_{\frac{1}{2}-}, F_{\frac{1}{2}-})$ as the DFA which accepts $A_{\frac{1}{2}-}$:
+      \begin{equation}
+        \begin{split}
+          Q_{\frac{1}{2}-} &= Q \times 2^Q\\
+          {q_0}_{\frac{1}{2}-} &= (q_0, F)\\
+          \delta_{\frac{1}{2}-}((q, R), a) &= (\delta(q, a), \{s \in Q | \exists\alpha\in Q: \delta(s, \alpha) \in R\})\\
+          F &= \{(q, R) | q\in R, R\in 2^Q\}
+        \end{split}
+      \end{equation}
+      Intuitively, $A_{\frac{1}{2}-}$ is the DFA which begins with the start symbol and the set of final states. Each time it processes a symbol, it advances the state and moves backwards on the transition for the set of states. Finally, if we arrive at a state which is a subset of the reverse traversal states, we know that we have arrived at a state which has a path using $|w|$ transitions which arrives at a final state in $D$.\par
+      We now formally prove the correctness using induction.
+      \begin{claim}
+        After processing $i$ symbols, let the state be $(q_i, R_i)$. Then from all states $s\in R_i$ there exists a walk to $F$ in $i$ transitions. Additionally, each such state is present in $R_i$.
+      \end{claim}
+      \begin{proof}
+        The base case is true ($i=0$) trivially. Now assume that the claim is true for $i$, consider the claim for $i+1$.\\
+        Let the sequence of states be $(q_0, R_0), (q_1, R_1), \ldots, (q_i, R_i), (q_{i+1}, R_{i+1})$. We know that there is a path of $i$ transitions from all states in $R_i$. From the construction of $R_{i+1}$ we know that there is a transition from each state of $R_{i+1}$ to a state of $R_i$. Therefore, adding this transition to the walk of $i$ transitions in $R_i$, we get that there exists a walk to a $F$ in $i+1$ transitions. Also, each state that has a walk of $i+1$ transitions is present in $R_{i+1}$ since otherwise, there would be a state corresponding to that walk which won't be present in $R_i$. This would lead to a contradiction to our inductive hypothesis. Therefore, each such state having a walk of $i+1$ transitions to $F$ is present in $R_{i+1}$.
+      \end{proof}
+      We now use the above claim to prove the following:
+      \begin{enumerate}
+        \item For every word $w\in A$, $w_{\frac{1}{2}-}$ is recognised by $D_{\frac{1}{2}-}$
+        \item For every word $w$ which is recognised by $D_{\frac{1}{2}-}$, there exists a word $w_0\in A$.
+      \end{enumerate}
+      To prove the first statement, we use the result of the previous claim. Let $|w| = 2n$. Now, after $D_{\frac{1}{2}-}$ processes $n$ symbols, let the state be $(q_n, R_n)$. Now, since $w$ is accepted by $D$, there exists a walk of length $n$ from $q_n$ to a state in $F$. Therefore, $q_n\in R_n$. Thus, $(q_n, R_n)$ is an accepting state and it accepts $w_{\frac{1}{2}-}$.\\
+      For the second statement, we know that there exists a path of $n$ transitions from any accepting state $(q_n, R_n)$. We can construct a word $w_0$ by appending the transition symbols which will be arrive at a state in $F$. Therefore, for each word which is accepted by $D_{\frac{1}{2}-}$, we have a corresponding word that is accepted by $D$.
     \end{proof}
 \end{solution}
