@@ -9,5 +9,18 @@
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
+        Let's consider an equivalence relation $\equiv$ on $\{a\}^*$ and suppose it is right congruence and refines given language $L_2$. Suppose that it has finite index i.e it has finite equivalence classes. 
+        \\
+        \\
+        So, there exist $n$ and $m$ such that $1 \leq n < m$  and $[a^n] = [a^m]$ as the language is infinite.
+        As the relation is right congruence then 
+        \[[a^n][a^{fib_m - n}] = [a^m][a^{fib_m - n}]\] where $fib_m$ is the $m^{th}$ Fibonacci number.\\
+        So, 
+        \[[a^{fib_m}] = [a^{fib_m +( m - n)}]\]
+        We know that $LHS \in L_2$ and, as $fib_m + (m-n) < fib_m + m < fib_m + fib_m < fib_m + fib_{m+1}$ we can say that $RHS \notin L_2$.
+        
+        This contradicts our assumption. Hence there doesn't exist a Myhill Nerode Relation for language $L_2$. So $L_2$ is not regular.
+        
+        
     \end{proof}
 \end{solution}
