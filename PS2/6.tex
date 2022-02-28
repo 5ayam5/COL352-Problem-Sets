@@ -1,7 +1,20 @@
 \begin{solution}{Question 6}\label{ques:6}
     \begin{question}
+        Let $M = (Q, \Sigma, q_0, \delta, F)$ be a DFA and let $h$ be a state of $M$ called its ``home”. A synchronizing sequence for $M$ and $h$ is a string $s \in \Sigma^*$ where $\hat{\delta}(q, s) = h$ for
+		every $q \in Q$. Say that $M$ is synchronizable if it has a synchronizing sequence for some state $h$. Prove that if $M$ is a $k$-state synchronizable DFA, then it has a synchronizing sequence of length at most $k^3$. Can you improve upon this bound?
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
+        Given a DFA $M$ such that $M$ is a k-state synchronizable DFA i.e there exist a sequence $s$ and state $h \in Q$ such that $\hat{\delta}(q, s) = h\ \forall q \in Q$.
+        \\
+        Let's define a set
+        \[Q(v) = \{\hat{\delta}(q, v)\ |\ \forall\ q\ in\ Q\}\]
+        We need to find a sequence $s$ to reduce the set states of size $|Q|$ to $\{h\}$ for some $h \in Q$. 
+        \\
+        \\
+        Hence we will find word $w$ such that $|Q(w)| < |Q|$ and for any $s$ of length $ < |w|$ $|Q(s)| = |Q|$. In worst case 1 pair at a time synchronised then length of such a string can be at most $k(k-1)$ (maximum different pairs of state in a transition). Any string having length greater than $k(k-1)$ will have pair of states repeated and can be removed to find other string which will synchronize the pair of state, and hence the second condition will not hold true.
+        \\
+        \\
+        Starting from $Q$, there can be at most $k-1$ such reductions. Thus length of sequence can be at most $k(k-1)*(k-1)$ i.e at most $k^3$.
     \end{proof}
 \end{solution}
