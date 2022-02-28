@@ -1,7 +1,38 @@
 \begin{solution}{Question 7}\label{ques:7}
     \begin{question}
+      For every string $x\in \{0, 1\}^+$ consider the number
+      \begin{equation*}
+        0.x = x[1]\cdot\frac{1}{2} + x[2]\cdot\frac{1}{2^2} + \cdots + x[|x|]\cdot\frac{1}{2^{|x|}}
+      \end{equation*}
+      where $|x|$ is the length of $x$. For a real number $\theta\in [0, 1]$ let
+      \begin{equation*}
+        L_\theta = \{x: 0.x \leq \theta\}
+      \end{equation*}
+      Prove that $L_\theta$ is regular if and only if $\theta$ is rational.
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
+      $(\Longleftarrow)$ We construct the following DFA for any rational number $0.\alpha_1\alpha_2\ldots\alpha_k\overline{\beta_1\beta_2\ldots\beta_m}$. We know that every rational number can be represented this way since its binary representation is finite or infinte but recurring.\par
+      We define $D = (Q, \{0, 1\}, \delta, q_1, F)$ as:
+      \begin{equation}
+        \begin{split}
+          Q &= \{q_1, q_2, \ldots, q_k, q_{k+1}, \ldots, q_{k+m}, q_{rej}, q_{acc}\}\\
+          \delta(q_i, a) &=
+          \begin{cases}
+            q_{i+1}, &\text{ if }a = \alpha_i, i \leq k\\
+            q_{acc}, &\text{ if }a < \alpha_i, i \leq k\\
+            q_{rej}, &\text{ if }a > \alpha_i, i \leq k\\
+            q_{k+1+(i-k-1\mod{m})}, &\text{ if }a = \beta_{(i-k-1\mod{m})}\\
+            q_{acc}, &\text{ if }a < \beta_{(i-k-1\mod{m})}\\
+            q_{rej}, &\text{ if }a > \beta_{(i-k-1\mod{m})}\\
+            q_{acc}, &\text{ if }i = acc\\
+            q_{rej}, &\text{ if }i = rej
+          \end{cases}\\
+          F &= Q \setminus \{q_{rej}, q_1\}
+        \end{split}
+      \end{equation}
+      It is easy to see that any number $0.x$ such that $0.x \leq \theta$ is accepted by $D$. This is because we move to the accepted as soon as any comparison is smaller and we move to the reject state as soon as any comparison is greater. For equality, we simply move to the next state and all such states are accepting.\par
+      Therefore, for any rational $\theta$, we have constructed a DFA for $L_\theta$. Therefore, $L_\theta$ is regular if theta is rational.\par
+      $(\implies)$
     \end{proof}
 \end{solution}
