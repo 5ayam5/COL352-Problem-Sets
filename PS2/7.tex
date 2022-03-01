@@ -33,6 +33,16 @@
       \end{equation}
       It is easy to see that any number $0.x$ such that $0.x \leq \theta$ is accepted by $D$. This is because we move to the accepted as soon as any comparison is smaller and we move to the reject state as soon as any comparison is greater. For equality, we simply move to the next state and all such states are accepting.\par
       Therefore, for any rational $\theta$, we have constructed a DFA for $L_\theta$. Therefore, $L_\theta$ is regular if theta is rational.\par
-      $(\implies)$
+      $(\implies)$ We will assume that $L_\theta$ is regular for any irrational number $\theta$. Therefore, by Myhil-Nehrode theorem, $L_\theta$ has finite equivalence classes. And since there are infinite words in $L_\theta$, at least one of the equivalence class will have more than one word. Let those two words be $x$ and $y$ such that $x$ is a prefix of $y$ and $y = \theta_1\theta_2\ldots\theta_{|y|}$. Since $\theta$ is irrational, we know that there exists an index $i$ such that $\theta_{|x|+i} \neq \theta_{|y|+i}$.\par
+      We prove the above claim by contradiction. Assume that $\theta_{|x|+i} = \theta_{|y|+i}$ for all $i$. Then, $\theta$ has a recurring expansion with the recurring part being $\theta_{|x|}\theta_{|x|+1}\theta_{|y|-1}$. This will be a contradiction to the irrationality of $\theta$.\par
+      We now consider the smallest such $i$ in the following equation:
+      \begin{equation}
+        \begin{split}
+            &[x] \equiv [y]\\
+            \implies &[x\theta_{|x|+1}\theta_{|x|+2}\ldots\theta_{|x|+i-1}1] \equiv [y\theta_{|x|+1}\theta_{|x|+2}\ldots\theta_{|x|+i-1}1]\\
+            = s_x \equiv s_y\text{ (say)}
+        \end{split}
+      \end{equation}
+      Now, since $\theta_{|x|+i} \neq \theta_{|y|+i}$, exactly one of them will be equal to $1$. Therefore, one of $x\theta_{|x|+1}\theta_{|x|+2}\ldots\theta_{|x|+i-1}1$ and $y\theta_{|x|+1}\theta_{|x|+2}\ldots\theta_{|x|+i-1}1$ will be greater than $\theta$ and the other will be accepted and be present in $L_\theta$. However, both of $s_x$ and $s_y$ are in the same equivalence classes. This is a contradiction the the Myhil-Nehrode theorem. Therefore, $L_\theta$ cannot be regular for an irrational $\theta$. Hence, proved.
     \end{proof}
 \end{solution}

@@ -4,24 +4,31 @@
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
-    Proof by contradiction using Pumping lemma.
-    We use the contrapositive of the pumping lemma i.e.-
-    %add equation
+    Proof by contradiction using Pumping lemma.\\
+    We use the following corollary (contrapositive) of the pumping lemma-
+    \begin{equation}
+      \begin{split}
+        &(\forall n \ \exists w \in L \text{ where }|w| \geq n, \forall w = xyz \text{ such that } y\neq \epsilon \text{ and }|xy| \leq n \implies \exists k \geq 0 \text{ s.t. }xy^kz \not\in L)\\
+        &\implies L\text{ is not regular}
+      \end{split}
+    \end{equation}
+    Let word $w\in L_1$ be a binary representation of a prime number p which can be represented as $xyz$ such that $|xy|\leq n\  \forall n$.
     
-    to prove that $L_1$ is not a regular language.
+    Given the binary representation $xyz$, the value of prime p in decimal is:
+    $$p=2^{k+m}x + 2^my + z$$
+    After pumping y, k times, value of p changes to p'-
+    $$p' = 2^{ki+m}x + 2^my\frac{2^{ki}-1}{2^k-1} + z$$ %pumping
+    Where $\frac{2^{ki}-1}{2^k-1}$ comes from summing the geometric progression made by terms containing y\\
+    Let i = p in this case-
+    $$p' = 2^{kp+m}x + 2^my\frac{2^{kp}-1}{2^k-1} + z$$ %i = p
+    By Fermat's little theorem, we know that if $p$ is prime then $a^p \equiv a$(mod p).\\
+    Taking modulo p-
+    $$p' = 2^{k+m}x + 2^my\frac{2^k-1}{2^k-1} + z$$ % taking modulo p fermat said hi
+    which is same as
+    $$2^{k+m}x + 2^my + z$$
     
-    Let word $w\in L_1$ be a binary representation of a prime number p which can be represented as $xyz$ such that $|xy|\leq n$
-    
-    
-    
-    % https://math.stackexchange.com/questions/1232463/how-to-prove-the-language-of-all-binary-numbers-that-are-prime-is-nonregular-usi/1232511#1232511
-    $$p=z + 2^my + 2^{k+m}x$$
-    %yoooo
-    % heyyy
-    $$z + 2^my(2^{ki-k}-1) + 2^{ki+m}x$$ % take i = p and using Fermat's theorem, we'll get a multiple of p hence it is composite yoo
-
-    $$a_1a_2\ldots a_{k-1} (a_k\ldots a_l)^i a_{l+1}\ldots a_n$$
-    $$a_k\leq a_{l+1}, \ldots, a_{k+n-l} \leq a_n$$
-    $$$$
+    Since bin(p') is longer than bin(p), it implies that p is a factor of p', hence p' is not a prime.
+    Therefore we can say that $\exists k \text{ such that } xy^kz \not\in L_1$.\\
+    Hence proved that $L_1$ is not a regular language.
     \end{proof}
 \end{solution}
