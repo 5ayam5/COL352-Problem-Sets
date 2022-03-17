@@ -1,8 +1,39 @@
 \begin{solution}{Question 2}\label{ques:2}
     \begin{question}
-    Prove that the class of context-free languages is closed under intersection with regular languages. That is, prove that if $L_1$ is a context-free language and $L_2$ is a regular language, then $L_1 \cap L_2$ is a context-free language. Do this by starting with a DF
+    Prove that the class of context-free languages is closed under intersection with regular languages. That is, prove that if $L_1$ is a context-free language and $L_2$ is a regular language, then $L_1 \cap L_2$ is a context-free language. Do this by starting with a DFA
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
+    Let there be a PDA $P = (Q_P, \Sigma_P, \tau_P, \delta_P, q_{\circ_P}, F_P)$ for context free language $L_1$ and a DFA $D = (Q_D, \Sigma_D, \delta_D, q_{\circ_D}, F_D)$ for regular language $L_2$. To prove that $L_1 \cap L_2$ is a context-free language we need to show that there exists a PDA which accepts this language.\\
+    Now consider the PDA $P' = (Q', \Sigma', \tau', \delta', q_{\circ}', F')$ defined below.
+    
+    \begin{enumerate}
+        \item $Q' = Q_P \times Q_D$
+        \item $\Sigma' = \Sigma_P \cup \Sigma_D$
+        \item $\tau' = \tau_P$
+        \item $\delta'((x, y), a, b) = \{(x', y')$ where $x'\in \delta_P(x, a, b)$ and $y' =  \delta_D(y, b) \}$.\\ 
+            Here $a \in \tau'$(stack top element), $b \in \Sigma'$(input element) and $(x, y) \in Q'$.
+        \item $q_{\circ}' = (q_{\circ_P},  q_{\circ_D})$
+        \item $F' = F_P \times F_D$
+    \end{enumerate}
+    
+    Here states in $P'$ are pair of states where first state is from $P$ and second state if from $D$. $P'$ begins with empty stack from state $q_{\circ}'$ which is pair of start states of $P$ and $D$. On any state $(x, y)$ in $P'$ on reading next symbol $b$ from input string where $b \in \Sigma'$ it will transition into a state which is pair of states where $P$ and $D$ would have transition into on reading input symbol $b$ and stack top element $b$. 
+    
+    Notice that here $b$ can be $\epsilon$ i.e a transition in which the next symbol is not read. In this case $D$ would not make any transition and will stay in same state whereas state and stack of $P$ may be modified.\\
+    \\
+    We claim that language accepted by $P'$ is $L_1 \cap L_2$. 
+    \begin{proof}
+    Let $s$ be a string accepted by $P'$. Look at the derivation of $s$ in PDA in $P'$ and let say that 
+    \[\{(q_{\circ_P},  q_{\circ_D}), (u_1, v_1), (u_2, v_2).......(u_k, v_k), (q_{F_P}, q_{F_D})\}\] 
+    be the transition states of the derivation. It is similar to saying that $P$ and $D$ are transitioning on input string $s$ in parallel. That is $P$ has derivation \[\{q_{\circ_P}, u_1, u_2, ....., u_k, q_{F_P}\}\] 
+    and $D$ has a derivation  
+    \[\{q_{\circ_D}, v_1, v_2, .... v_k, q_{F_D}\}\] 
+    for input string $s$. \\
+    From the construction we know that all the transitions of first state if defined by transition function of $P$ and that of second state by transition function of $D$ and transition of second state if independent of stack of $P$. So the derivations above are valid transitions in $P$ and $D$ for input string $s$ and are in final states after consuming complete input. So we can say that the string $s$ is accepted by both $P$ and $D$. \\
+    Notice here that it is not possible that $s$ is accepted by only one of $P$ and $D$. This is because the final states say $(x, y)$ in $F'$ of $P'$ is pair final states of $P$ and $D$.\\
+    \\
+    Thus we can say that language accepted by $P'$ is $L_1 \cap L_2$.
+    \end{proof}
+        
     \end{proof}
 \end{solution}

@@ -10,5 +10,8 @@ If $A$ is a CFL, then there is a number $k$ where if $s$ is any string in $A$ of
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
+    %-------------------------idea-------------------------------------------
+    Found the trick to finish the proof. We just need to increasing the size of the pump. Let $v$ be the number of variables in a Chompsky normal form grammar. If $2^v$ is the ordinary pumping length. Consider a new length $2^{3v}$. In the parse tree of a long string (of minimal length) of length greater than $2^{3v}$, there must be a path of height 3v. Thus some variable must occur 3 times. Then use the minimality of the parse tree to conclude that the stepwise retiteration can be pumped.
+    %-------------------------idea--------------------------------------------
     \end{proof}
 \end{solution}

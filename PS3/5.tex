@@ -4,5 +4,23 @@
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
+        Let's assume that $A$ is a context-free language. Let $p$ be the pumping length and take $s = 0^p(01)^{p/2}0^p$ which belongs to A and has length $> p$. Here $w = 0^p$ and $t = (01)^{p/2}$. From pumping lemma we can say that $s$ can be pumped.\\
+        Let's divide the string into $uvxyz$ such that $|vy| > 0$ i.e. either v or y in non empty and $|vxy| \leq p$. This is to satisfy the conditions of pumping lemma. Now according to pumping lemma for there will exist such $uvxyz$ satisfying above conditions and also $\forall i \geq 0\ uv^ixy^iz \in A$.\\
+        \\
+        Consider the following cases of dividing the string $s$ into $uvxyz$.
+        \begin{description}
+            \item[Case 1:] Both $v, y \in t$. Let $v = (01)^a$, $x = (01)^b$, and $y = (01)^c$ such that $a+b+c \leq p/2$. WLOG let $u = 0^p(01)^{(p/2-a-b-c)}$ and $z = 0^p$.\\
+            For $i = 2$, we have pumped string $uv^2xy^2z = 0^p(01)^{p/2+a+c}0^p$. We can here see that only up to length $p$ prefix is reverse of suffix. And length of pumped string is $> 3p$. As it is not of the form $wtw^R$ where $|w| = |t|$, so $uv^2xy^2z \notin A$. This is a contradiction to our assumption that $A$ is CFL and holds the pumping lemma.
+            
+            \item[Case 2:] $v \in w$ and $y \in t$. Let $v = 0^a$, $x = 0^b(01)^c$ and $y = (01)^d$ such that $a + b + 2c + 2d < p$. Then $u = 0^{p-a-b}$ and $z = (01)^e0^p$ such that $c + d + e = p/2$.\\
+            For $i = 2$, we have pumped string $uv^2xy^2z = 0^{p+a}(01)^{c+2d+e}0^p$. Clearly here also up to length $p$ only prefix is reverse of suffix and length of pumped string is $ > 3p$. So $uv^2xy^2z \notin A$ which is a contradiction.
+            
+            \item[Case 3:] $v \in t$ and $y \in z$. This case is similar to \textbf{Case 2} and here also result in contradiction.
+        \end{description}
+        There cannot be any other case as then the length $|vxy|$ would be greater than $p$.\\
+        
+        As in every case of splitting $s$ into $uvxyz$ has resulted into violation of pumping lemma, thus our assumption that $A$ is a CFL is wrong. \\
+        
+        Hence $A$ is not a CFL.
     \end{proof}
 \end{solution}
