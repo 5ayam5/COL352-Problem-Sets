@@ -1,11 +1,33 @@
 \begin{solution}{Question 3}\label{ques:3}
     \begin{question}
-    Given two languages $L, L'$, denote by 
-$$L||L' := \{x_1y_1x_2y_2 \dots x_ny_n \mid x_1x_2 \dots x_n \in L, y_1y_2\dots y_n \in L'\}$$. 
-
-Show that if $L$ is a CFL and $L'$ is regular, then $L || L'$ is a CFL by constructing a PDA for $L || L'$. Is $L || L'$ a CFL if both $L$ and $L'$ are CFLs? Justify your answer.
+      Given two languages $L, L'$, denote by $$L||L' := \{x_1y_1x_2y_2 \dots x_ny_n \mid x_1x_2 \dots x_n \in L, y_1y_2\dots y_n \in L'\}$$.\par
+      Show that if $L$ is a CFL and $L'$ is regular, then $L || L'$ is a CFL by constructing a PDA for $L || L'$. Is $L || L'$ a CFL if both $L$ and $L'$ are CFLs? Justify your answer.
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
+      We will construct a PDA for the language $L||L'$, assuming that the PDA for $L$ is $P = (Q_L, \Sigma_L, \Gamma, \delta_L, (q_0)_L, \bot, F_L)$ and the NFA for $L'$ is $D = (Q_{L'}, \Sigma_{L'}, \delta_{L'}, (q_0)_{L'}, F_{L'})$, as $S = (Q_L \times Q_{L'} \times \{1, 2\}, \Sigma_L \cup \Sigma_{L'}, \delta, ((q_0)_L, (q_0)_{L'}, 1), F)$ as follows:
+      \begin{equation}
+        \begin{split}
+          F &= \{(f_1, f_2, 2) | f_1 \in F_L\text{ and }f_2 \in F_{L'}\}\\
+          \delta((q_1, q_2, 1), a, A) &= \{((q_1', q_2, 2), A') | (q_1', A') \in \delta_L(q_1, a)\}\\
+          \delta((q_1, q_2, 2), a, A) &= \{((q_1, q_2', 1), A) | q_2' \in \delta(q_2, a)\}
+        \end{split}
+      \end{equation}
+      We construct a PDA that alternates the simulation on the PDA and on the DFA. Therefore, the final accepting states are those where we reach the final state on both machines and we have just moving on the DFA (since it ends with $y_n$).\par
+      For the second part of the question, we show with a counter example that if both $L$ and $L'$ are CFLs then $L || L'$ is not a CFL. Consider the following languages:
+      \begin{equation}
+        \begin{split}
+          L &= 0^n1^{2n}\\
+          L' &= 0^{2n}1^n\\
+          \implies L || L' &= 0^{2n}(10)^n1^{2n}
+        \end{split}
+      \end{equation}
+      It is easy to see that both $L$ and $L'$ are CFG's. We just modify the PDA for $0^n1^n$ by inserting new states to recognize two consecutive $1$ for $L$ and two consecutive $0$ for $L'$. However, the language that we get as $L || L'$ is not a CFL. We can easily show this using Pumping Lemma. Let the pumping length be $n$. Now consider the string $z = 0^{2n}(10)^n1^{2n}$. For all possible breakups of $z$ as $uvwxy$ where $|vwx| \leq n$ and $vx \neq \epsilon$. We have the following cases:
+      \begin{enumerate}
+        \item \textbf{Case 1:} ($vwx = 0^n$) any pumping will lead to a word which will not be in $L || L'$
+        \item \textbf{Case 2:} ($vwx = 0^a(10)^\frac{n - a}{2}$) for any breakup of this string, we will have more $0$ than $1$ in the string. Therefore, no pumped string will be in $L || L'$
+        \item \textbf{Case 3:} ($vwx = (10)^\frac{n - a}{2}1^a$) for any breakup of this string, we will have more $1$ than $0$ in the string. Therefore, no pumped string will be in $L || L'$
+      \end{enumerate}
+      Therefore, we have shown that the language produced by $L || L'$ when both $L$ and $L'$ are CFLs is not a CFL. Therefore CFLs are not closed under this operation.
     \end{proof}
 \end{solution}
