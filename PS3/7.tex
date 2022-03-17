@@ -4,9 +4,36 @@
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
-    % https://cs.stackexchange.com/questions/12041/example-of-a-non-context-free-language-that-nonetheless-can-be-pumped
-    
-    
-    
-    \end{proof}
+        While studying pumping lemma for regular languages, we came across the example: 
+        \begin{equation}
+            \begin{split}
+                L_1 &= \{ ca^n b^n | n \geq 1\}\\
+                L_2 &= \{ c^kw | k\neq 1, \text{ w starts with a or b}\}\\
+                L &= L_1 \cup L_2
+            \end{split}
+        \end{equation}
+        From this example, we gathered that despite $L_1$ and subsequently $L$ being non regular, L is still pumpable as the non regular part can be pumped to the regular part.\par
+        Similar to this, an example of a language which is not a CFL but can still be pumped using the pumping lemma for CFLs is:
+        \begin{equation}
+            \begin{split}
+                L_1 &= \{ d a^n b^n c^n | n \geq 1\}\\
+                L_2 &= \{ d^kw | k\neq 1, \text{ w starts with a or b or c}\}\\
+                L &= L_1 \cup L_2
+            \end{split}
+        \end{equation}
+        
+        $L$ is not a CFL but it can be pumped. The proof is as follows:
+        
+        \begin{proof}[1. L is not a CFL]
+            $L_1$ is clearly not a CFL (we have proved this in the class) whereas $L_2$ is a CFL. Also, $L_1 \cap L_2 = \phi$. Therefore, it is not possible that the union of these two languages will yield a CFL. No automaton will be be able to recognize languages that begin with $d$ followed by $a, b, c$.
+        \end{proof}
+        
+        \begin{proof}[2. L can be pumped]
+        Let the pumping length be $p$ and consider a string $l \in L$ of size $\geq p$. As stated previously, $L_1$ and $L_2$ have no intersection. Therefore, case 1: \textit{$l\in L_1$}, we can pump the terminal letter $d$ ($u = \phi, v = d, w = \phi, x = \phi, y = a^nb^nc^n$) and it will fall in $L_2$ satisfying the pumping lemma; case 2: \textit{$l \in L_2$}, again, the first letter $d$ can be pumped and the resultant string will again lie in $L_2$, making it pumpable.
+        
+        \end{proof}
+        
+        Hence $L$ is an example of a language which is pumpable but not a CFL.
+        
+        \end{proof}
 \end{solution}

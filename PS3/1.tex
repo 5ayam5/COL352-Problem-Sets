@@ -13,11 +13,11 @@
             \State{$done \gets$ boolean array initialised with $0$ for each non-terminal}
             \While{$\exists A: \neg done[A] \wedge (\forall B \in child[A]: done[B])$} \Comment{construct NFA for A using concatenation of regular languages}
               \State{$nfa(A) \gets (Q_A, \Sigma_A, \delta_A, q_A, F_A)$}
-              \State{$Q_A \gets \{q_{\alpha_i} | 1 \leq i \leq n + 1\} \cup \left(\bigcup_{i=1}^n Q_{A_i}\right)$}
+              \State{$Q_A \gets \{q_{A\alpha_i} | 1 \leq i \leq n + 1\} \cup \left(\bigcup_{i=1}^n Q_{A_i}\right)$}
               \State{$\Sigma_A \gets \{\alpha_i | 1 \leq i \leq n + 1\}\cup \left(\bigcup_{i=1}^n \Sigma_{A_i}\right)$}
-              \State{$\delta_A \gets \{\delta_A(q_{\alpha_i}, \alpha_i) = q_{A_i} | 1 \leq i \leq n\} \cup \{\delta_A(f_i, \alpha_{i + 1}) = q_{\alpha_{i + 1}} | 1 \leq i \leq n \wedge f_i \in F_{A_i}\} \cup (\bigcup_{i=1}^n \delta_{A_i})$}
-              \State{$q_A \gets q_{\alpha_1}$}
-              \State{$F_A \gets \{q_{\alpha_{n + 1}}\}$}
+              \State{$\delta_A \gets \{\delta_A(q_{A\alpha_i}, \alpha_i) = q_{A_i} | 1 \leq i \leq n\} \cup \{\delta_A(f_i, \alpha_{i + 1}) = q_{A\alpha_{i + 1}} | 1 \leq i \leq n \wedge f_i \in F_{A_i}\} \cup (\bigcup_{i=1}^n \delta_{A_i})$}
+              \State{$q_A \gets q_{A\alpha_1}$}
+              \State{$F_A \gets \{q_{A\alpha_{n + 1}}\}$}
               \State{$done[A] \gets 1$}
             \EndWhile{}
             \State{\Return{$nfa(S_0)$}} \Comment{$S_0$ is the start symbol of $G$}

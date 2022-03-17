@@ -23,7 +23,7 @@ Show that if $A$ is a CFL then so is $cycle(A)$
         \item In reverse production the duplicate of original start symbol will have this $S' \longrightarrow \epsilon$ production rule as in original grammar it doesn't appears on right side of any production rule..
     \end{enumerate}
     
-    We claim that language of $G'$ is $cycle(A)$. 
+    We claim that language of $G'$ is $cycle(A)$. Taking the above example only we see that $S$ derives $X_1X_2X_3...X_nY_1Y_2....Y_m$. In $G'$, $S'$ will derive $y_1Y_1'$ and further $Y_1'$ will derive $Y_2Y_3...Y_nS'X_1X_2X_3...X_n$ and $S'$ goes to $\epsilon$. Thus it derives string belonging to $cycle(A)$. We can prove this using induction on length of derivation in original grammar.
     
     Now as language of $G'$ is $cycle(A)$, thus $cycle(A)$ is a context-free language. 
     \end{proof}
