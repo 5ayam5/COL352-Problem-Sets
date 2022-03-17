@@ -3,6 +3,27 @@
     We say that a context-free grammar G is self-referential if for some non-terminal symbol X we have $X\longrightarrow^* \alpha X \beta$, where $\alpha,\beta \neq \epsilon$. Show that a CFG that is not self-referential is regular.
     \end{question}
     \tcblower{}
-    \begin{proof}[Solution]
+    \begin{proof}
+      Since it is given that $G$ is not self-referential, we can construct a DAG on $G$. For each production, $A \to \alpha_1 A_1 \alpha_2 A_2 \ldots \alpha_n A_n \alpha_{n+1}$, where $A_i$ are non-terminals and $\alpha_i$ are terminals, we add an edge $A \to A_i \forall i: 1 \leq i \leq n$. Since $G$ is not self-referential, the graph generated will be a DAG (this can be easily proved using contradiction). We now propose the following algorithm to generate a NFA for $L(G)$:
+      \begin{algorithm}[H]
+        \caption{Algorithm to generate NFA for L(G)}
+        \begin{algorithmic}[1]
+          \Procedure{NFA}{G}
+            \State{$D \gets graph(G)$}
+            \State{$done \gets$ boolean array initialised with $0$ for each non-terminal}
+            \While{$\exists A: \neg done[A] \wedge (\forall B \in child[A]: done[B])$} \Comment{construct NFA for A using concatenation of regular languages}
+              \State{$nfa(A) \gets (Q_A, \Sigma_A, \delta_A, q_A, F_A)$}
+              \State{$Q_A \gets \{q_{\alpha_i} | 1 \leq i \leq n + 1\} \cup \left(\bigcup_{i=1}^n Q_{A_i}\right)$}
+              \State{$\Sigma_A \gets \{\alpha_i | 1 \leq i \leq n + 1\}\cup \left(\bigcup_{i=1}^n \Sigma_{A_i}\right)$}
+              \State{$\delta_A \gets \{\delta_A(q_{\alpha_i}, \alpha_i) = q_{A_i} | 1 \leq i \leq n\} \cup \{\delta_A(f_i, \alpha_{i + 1}) = q_{\alpha_{i + 1}} | 1 \leq i \leq n \wedge f_i \in F_{A_i}\} \cup (\bigcup_{i=1}^n \delta_{A_i})$}
+              \State{$q_A \gets q_{\alpha_1}$}
+              \State{$F_A \gets \{q_{\alpha_{n + 1}}\}$}
+              \State{$done[A] \gets 1$}
+            \EndWhile{}
+            \State{\Return{$nfa(S_0)$}} \Comment{$S_0$ is the start symbol of $G$}
+          \EndProcedure{}
+        \end{algorithmic}
+      \end{algorithm}
+      In the above algorithm, we construct NFAs sequentially starting from those non-terminals which directly yield a terminal and have no outgoing edges. We then move up the graph to non-terminals that produce other non-terminals whose NFAs have already been constructed. We construct the NFA using concatenation of the NFAs for the non-terminals and terminals on the right hand side. Finally, we return the NFA produced for the start symbol.
     \end{proof}
 \end{solution}
