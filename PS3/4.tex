@@ -8,5 +8,23 @@ Show that if $A$ is a CFL then so is $cycle(A)$
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
+    Given that $A$ is a CFL, then let $G = (V, \Sigma, R, S)$ denote the context-free grammar for language $A$ in Chomsky Normal Form. Let's look at the derivation of $xy$ in A using $G$ where $x = x_1x_2x_3....x_n$ and $y = y_1y_2...y_m$.\\
+    
+    In the derivation tree of $xy$, consider the path $S \longrightarrow X_1 \longrightarrow X_2 ..... \longrightarrow X_n$. Here string derived in the left(including $X_n$) will be $x_1x_2x_2...x_n$ i.e $x$ and string derived to the right will be $y_1y_2....y_m$ i.e. $y$. To construct a grammar which accepts $yx$, we will somewhat need to produce string in upside down manner on this path i.e. in leftmost derivation we need to first produce $y_1y_2y_3....y_m$ and then $x_1x_2x_3.....x_n$ going down the tree.\\
+    
+    Let's construct the grammar  $G' = (V', \Sigma, R', S')$ for $cycle(A)$. First we add duplicate of every variable $A \in V$ to $V'$ as $A'$.
+    \begin{enumerate}
+        \item As $G$ is in CNF, so every production in G will be in one for the following forms. For every form we will add new rules to $G'$ as following.
+            \begin{enumerate}
+                \item $A \longrightarrow BC$. Now to produce $C$ before $B$ we will add a grammar rule $C' \longrightarrow A'B$. Similarly we do for B, we add $B' \longrightarrow CA'$
+                \item $A \longrightarrow a$. This is a leaf production in derivation tree of original grammar. In upside down production this will be produced by the start symbol. Hence a production rule $S' \longrightarrow aA'$.
+            \end{enumerate}
+        \item $G'$ will also have all rules of $G$ as $A \subset cycle(A)$. And thus start symbol of $G$ will now be produced by the new start symbol, so $S' \longrightarrow S$.
+        \item In reverse production the duplicate of original start symbol will have this $S' \longrightarrow \epsilon$ production rule as in original grammar it doesn't appears on right side of any production rule..
+    \end{enumerate}
+    
+    We claim that language of $G'$ is $cycle(A)$. 
+    
+    Now as language of $G'$ is $cycle(A)$, thus $cycle(A)$ is a context-free language. 
     \end{proof}
 \end{solution}
