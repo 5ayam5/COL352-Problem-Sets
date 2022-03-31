@@ -4,31 +4,41 @@
         $$C = \{ x | \exists y (\langle x,y \rangle \in D) \}$$
     \end{question}
     \tcblower{}
-    \begin{proof}[Solution]
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    To prove the iff statement, we consider the following parts one by one:
-    \begin{proof}[Direction 1:]
-    Given a decidable language $D$, the Language $C = \{ x | \exists y (\langle x,y \rangle \in D) \}$ formed is Turing recognizable. 
-    \\
-    \textbf{Proof:}
-    For a language to be Turing recognizable, if a string $x \in \Sigma^*$ the TM halts and accepts it and if $x \not\in \Sigma^*$, TM either rejects it or keeps running.\\
-    In our case, Language $D$ is Turing decidable, which means given an input $\langle x,y \rangle$ it either accepts or rejects the string and halts for every input.\\
-    Given any string $x$, $C$ accepts it if there exists a string $y$ such that $\langle x,y \rangle \in D$. Hence our Turing Machine for $C$ keeps searching for a string $y$ given an input $x$ so that $\langle x,y \rangle \in D$. Since $y$ is of finite length it can always be found in finite amount of time, if such $y$ is found, $x$ is an accepted string and the TM halts. If no such $y$ is found, TM keeps looking for it indefinitely.\\
-    This implies that language $C$ is Turing recognizable
-    \end{proof}
-    
-    \begin{proof}[Direction 2:]
-    Given language $C$ such that $C = \{ x | \exists y (\langle x,y \rangle \in D) \}$ is Turing recognizable, prove that $D$ is Turing decidable.
-    \\
-    \textbf{Proof:}
-    
-    
-    
-    \end{proof}
-    
-    On combining both proven statements in Direction 1 and Direction 2, we can say that given language $C = \{ x | \exists y (\langle x,y \rangle \in D) \}$ is Turing recognizable if language $D$ is Turing Decidable.
-    \begin{center}
-        Hence Proved
-    \end{center}
+    \begin{proof}
+      To prove the iff statement, we consider the following parts one by one:
+      \begin{proof}[Direction 1:]
+        Given a decidable language $D$, the Language $C = \{ x | \exists y (\langle x,y \rangle \in D) \}$ formed is Turing recognizable.\par
+        \textbf{Proof:}
+        For a language to be Turing recognizable, if a string $x \in \Sigma^*$ the TM halts and accepts it and if $x \not\in \Sigma^*$, TM either rejects it or keeps running.\\
+        In our case, Language $D$ is Turing decidable, which means given an input $\langle x,y \rangle$ it either accepts or rejects the string and halts for every input.\\
+        Given any string $x$, $C$ accepts it if there exists a string $y$ such that $\langle x,y \rangle \in D$. Hence our Turing Machine for $C$ keeps searching for a string $y$ given an input $x$ so that $\langle x,y \rangle \in D$. Since $y$ is of finite length it can always be found in finite amount of time, if such $y$ is found, $x$ is an accepted string and the TM halts. If no such $y$ is found, TM keeps looking for it indefinitely.\par
+        This implies that language $C$ is Turing recognizable
+      \end{proof}
+      
+      \begin{proof}[Direction 2:]
+        Given language $C$ such that $C$ is Turing recognizable, then there exists a Turing-decidable language $D$ such that $C = \{ x | \exists y (\langle x,y \rangle \in D) \}$.\par
+        \textbf{Proof:}
+        We define the following algorithm for the language $D$:
+        \begin{algorithm}[H]
+          \caption{Algorithm for a language $D$}
+          \label{alg:3.1}
+          \begin{algorithmic}[1]
+            \Procedure{D}{$C, x, y$}
+              \State{$status \gets run_n(C, x, |y|)$}  \Comment{$run_n(M, w, n)$ simulates $M$ with input $w$ for \textit{atmost} $n$ steps}
+              \If{$status = accepted$}
+                \State{\Return{accept}}
+              \Else{}
+                \State{\Return{reject}}
+              \EndIf{}
+            \EndProcedure{}
+          \end{algorithmic}
+        \end{algorithm}
+        Since Algorithm~\ref{alg:3.1} simulates $C$ on $x$ for \textit{atmost} $|y|$ iterations, the algorithm always terminates in finite number of steps. Also, it uniquely accepts or rejects $\langle x, y\rangle$. Therefore, the language $D$ is decidable. Also, it is easy to see that the language satisfies the property that $C$ accepts $x$ iff $\exists y: \langle x, y\rangle \in D$. Therefore, we have shown the existence of such a language.
+      \end{proof}
+      
+      On combining both proven statements in Direction 1 and Direction 2, we can say that given language $C = \{ x | \exists y (\langle x,y \rangle \in D) \}$ is Turing recognizable if language $D$ is Turing Decidable.
+      \begin{center}
+          Hence Proved
+      \end{center}
     \end{proof}
 \end{solution}
