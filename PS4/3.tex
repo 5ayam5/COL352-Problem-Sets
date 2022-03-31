@@ -11,9 +11,10 @@
     Given a decidable language $D$, the Language $C = \{ x | \exists y (\langle x,y \rangle \in D) \}$ formed is Turing recognizable. 
     \\
     \textbf{Proof:}
-    Language D is Turing Decidable.
-    
-    
+    For a language to be Turing recognizable, if a string $x \in \Sigma^*$ the TM halts and accepts it and if $x \not\in \Sigma^*$, TM either rejects it or keeps running.\\
+    In our case, Language $D$ is Turing decidable, which means given an input $\langle x,y \rangle$ it either accepts or rejects the string and halts for every input.\\
+    Given any string $x$, $C$ accepts it if there exists a string $y$ such that $\langle x,y \rangle \in D$. Hence our Turing Machine for $C$ keeps searching for a string $y$ given an input $x$ so that $\langle x,y \rangle \in D$. Since $y$ is of finite length it can always be found in finite amount of time, if such $y$ is found, $x$ is an accepted string and the TM halts. If no such $y$ is found, TM keeps looking for it indefinitely.\\
+    This implies that language $C$ is Turing recognizable
     \end{proof}
     
     \begin{proof}[Direction 2:]
@@ -29,15 +30,5 @@
     \begin{center}
         Hence Proved
     \end{center}
-    
-    We need to prove both directions. To handle the easier one first, assume that the decidable language D
-exists. A TM recognizing C operates on input x by going through each possible string y and testing whether
-hx, yi ∈ D. If such a y is ever found, accept; if not, just continue searching.
-For the other direction, assume that C is recognized by TM, denoted by M. Define the language D to
-be {hx, yi | M accepts x within |y| steps}. Language D is decidable since one can run M for y steps and
-accept iff M has accepted. If x ∈ C, then M accepts x within some number of steps, so hx, yi ∈ D for some
-sufficiently long y, but if x /∈ C then hx, yi ∈/ C for any y.
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        sol
     \end{proof}
 \end{solution}

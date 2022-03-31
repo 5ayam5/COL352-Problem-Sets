@@ -18,7 +18,7 @@
         $S$ = "On input $<G, A>$, where $G$ is a grammar and $A$ a variable in $G$:
         \begin{enumerate}
             \item Mark all terminal symbol in $G$.
-            \item Repeat until no new symbol is marked with "$^\cdot$":
+            \item Repeat until no new symbol is marked with ``$^\cdot$":
             \begin{enumerate}
                 \item Mark all variable $X$ where $G$ has a rule $X \longrightarrow U_1U_2U_3...U_k$ and each symbol $U_i$ has been marked as $\dot{U_i}$.
             \end{enumerate}
@@ -30,7 +30,8 @@
             \item If start symbol of $G$ is marked as $\underline{\dot{S}}$ then accept; else reject.
         \end{enumerate}
         
-        In first loop, marking variables with "$^\cdot$" tells that these variables can derive strings of terminals only. After loop in step 2 completes, if $A$ has not been mark then it means $A$  cannot generate any string of terminals hence we reject. Now, is $A$ has been marked
+        In first loop, marking variables with ``$^\cdot$" tells that these variables can derive a string of terminals. After loop in step 2 completes, if $A$ has not been mark then it means $A$  cannot generate any string of terminals hence we reject.\\
+        In other case if $A$ is marked, we find out the variables $X$ who can derive a string $Y_1Y_2Y_3...Y_k$ such that at least one of the $Y_i$ is $A$ and rest all can also generate a string of terminals. After all such variables are marked, we check if start symbol $S$ is marked as $\underline{\dot{S}}$. If yes, then it means start symbol can generate a string $w$ whose derivation contains a string in which variable $A$ is present.
         
         
         The Turing machine $R$ always decides input $<G, A>$ as the algorithm terminates.
