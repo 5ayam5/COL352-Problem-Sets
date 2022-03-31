@@ -3,7 +3,52 @@
         Show that every infinite Turing-recognizable language has an infinite decidable subset.
     \end{question}
     \tcblower{}
-    \begin{proof}[Solution]
-        sol
+    \begin{proof}
+      Let the Turing-recognizable language be $L$. Consider an enumerator for this language $E$. Consider the following algorithm:
+      \begin{algorithm}[H]
+        \caption{Return the first word of length $n$ enumerated such that all words enumerated earlier are of shorter length else $\epsilon$}
+        \label{alg:1.1}
+        \begin{algorithmic}[1]
+          \Procedure{EnumerateFirst}{$E, n$}
+            \State{$w \gets \epsilon$}
+            \State{$curr_w \gets \epsilon$}
+            \While{$|curr_w| < n$}
+              \State{$curr_w \gets next(E)$}
+              \If{$|curr_w| > |w|$}
+                \State{$w \gets curr_w$}
+              \EndIf{}
+            \EndWhile{}
+            \If{$|w| > n$}
+              \State{$w \gets \epsilon$}
+            \EndIf{}
+            \State{\Return{$w$}}
+          \EndProcedure{}
+        \end{algorithmic}
+      \end{algorithm}
+      We now define the following Turing machine $T_{decidable}$:
+      \begin{algorithm}[H]
+        \caption{Turing machine of a decidable subset}
+        \label{alg:1.2}
+        \begin{algorithmic}[1]
+          \Procedure{DecidableSubset}{$L, w$}
+            \State{$E \gets enumerator(L)$}
+            \State{$w' \gets EnumerateFirst(E, |w|)$}
+            \If{$w' = w$}
+              \State{\Return{accept}}
+            \Else{}
+              \State{\Return{reject}}
+            \EndIf{}
+          \EndProcedure{}
+        \end{algorithmic}
+      \end{algorithm}
+      We claim that $T_{decidable}$ is a Turing machine and decidable. For this, we first prove that Algorithm~\ref{alg:1.1} is correct and terminates. For correctness, notice that the while loop exits only if $|curr_w| \geq n$ and thus the length of the string in $w$ after the termination of the while loop is at least $n$. Therefore, the final returned value is the first string enumerated with length equal to $n$ (such that all strings before are of smaller length) or $\epsilon$.\par
+      For termination, notice that there are only a finite possibilities before $E$ enumerates a string with length $\geq n$. Therefore, the while loop terminates after a finite number of iterations.\par
+      We have shown that Algorithm~\ref{alg:1.1} is decidable since it halts. Therefore, the string $w'$ in ALgorithm~\ref{alg:1.2} is generated in finite number of steps. The comparison of $w'$ and $w$ also completes in finite steps. Therefore, Algorithm~\ref{alg:1.2} accepts or rejects $w$ in finite number of steps. Therefore, $T_{decidable}$ is a decidable Turing machine.\par
+      We also need to show that $T_{decidable}$ recognizes an infinite language. This is obvious since $L$ is infinite and therefore the following set forms an infinite sequence:
+      \begin{equation}
+        \{i | \forall i \in \mathbb{N}: EnumerateFirst(E, i) \neq \epsilon\}
+      \end{equation}
+      This set is a bijection to the words recognised by $T_{decidable}$. Therefore, $L(T_{decidable})$ is also an infinite set.\par
+      Thus, we have shown that for every infinite Turing-recognizable language, we have an infinite decidable subset.
     \end{proof}
 \end{solution}
