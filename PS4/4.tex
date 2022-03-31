@@ -1,9 +1,40 @@
 \begin{solution}{Question 4}\label{ques:4}
     \begin{question}
-        ques
+        Say that a variable $A$ in CFL $G$ is is \emph{usable} is it appears in some derivation of some string $\omega \in G$. Given a CFG $G$ and a variable $A$, consider a problem of testing whether $A$ is usable. Formulate this problem as language and show that is decidable.
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
-        sol
+        We need to test here whether the start symbol $S$ of grammar $G$ generates a string whose derivation contains variable $A$. In order to do so we design an algorithm to test the above. The algorithm will first mark $^\cdot$ on all the symbols that generate strings (Ex: $X$ as $\dot{X}$). Then starting from symbol $A$, it will underline the variables that will generate string(marked with dot) and also contains $A$ in at least one of the derivation (Ex: $\dot{X}$ as $\underline{\dot{X}}$). Now, if the start symbol $S$ is marked as $\underline{\dot{S}}$, it means that start symbol generate a string that contains $A$ in its derivation.
+        
+        \bigskip
+        
+        We use this algorithm to design a Turing machine $R$ which decides the following language $U_{TM}$.
+        \[U_{TM} = \{<G, A> | A \text{ is a variable which is \emph{usable} in } G \}\]
+        
+        Turing machine $R$ works as following:
+        
+        \bigskip
+        
+        $S$ = "On input $<G, A>$, where $G$ is a grammar and $A$ a variable in $G$:
+        \begin{enumerate}
+            \item Mark all terminal symbol in $G$.
+            \item Repeat until no new symbol is marked with "$^\cdot$":
+            \begin{enumerate}
+                \item Mark all variable $X$ where $G$ has a rule $X \longrightarrow U_1U_2U_3...U_k$ and each symbol $U_i$ has been marked as $\dot{U_i}$.
+            \end{enumerate}
+            \item If $A$ not marked as $\dot{A}$ reject else mark $\dot{A}$ as $\underline{\dot{A}}$.
+            \item Repeat until no new symbol is underlined
+            \begin{enumerate}
+                \item Underline all variable $\dot{X}$ where $G$ has a rule  $X \longrightarrow U_1U_2U_3...U_k$ and each symbol $U_i$ has been marked as $\dot{U_i}$ and at least one of symbol $U_j$ has been underlined.
+            \end{enumerate}
+            \item If start symbol of $G$ is marked as $\underline{\dot{S}}$ then accept; else reject.
+        \end{enumerate}
+        
+        In first loop, marking variables with "$^\cdot$" tells that these variables can derive strings of terminals only. After loop in step 2 completes, if $A$ has not been mark then it means $A$  cannot generate any string of terminals hence we reject. Now, is $A$ has been marked
+        
+        
+        The Turing machine $R$ always decides input $<G, A>$ as the algorithm terminates.
+        \\
+        Thus, the language $U_{TM}$ is decidable.
     \end{proof}
 \end{solution}
