@@ -4,7 +4,7 @@
     \end{question}
     \tcblower{}
     \begin{proof}
-        Define the following function $f_w$ for such a Turing machine $M$ and input $w$:
+      We consider the subset $L'$ of $L(M)$ such that $w \in L'$ leaves the input portion at least once. The language $L(M) \setminus L'$, can be simulated by a 2DFA and therefore this language is regular. Therefore, it is enough to show that the language $L'$ is regular (since union of regular languages is regular). Define the following (partial) function $f_w$ for such a Turing machine $M$ and input $w$:
         \begin{equation}
           \begin{split}
             f_w(q) &= q',\text{ when }M\text{ enters the input portion on }q\text{ and exits the input portion on }q'\\
@@ -25,6 +25,7 @@
             \implies &[xa] \equiv [ya]
           \end{split}
         \end{equation}
-        Therefore, $f_w$ defines an equivalence, right congruent relation with finite classes. Therefore, by Myhil-Nehrode theorem, $M$ recongizes only regular languages.
+        Therefore, $f_w$ defines an equivalence, right congruent relation with finite classes. Therefore, by Myhil-Nehrode theorem, $L'$ recongizes only regular languages. From the closure of regular languages under union, we get that $L(M)$ and therefore $M$, recognizes only regular languages.\par
+        Hence, proved.
     \end{proof}
 \end{solution}
