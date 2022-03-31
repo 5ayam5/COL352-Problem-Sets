@@ -1,11 +1,48 @@
 \begin{solution}{Question 7}\label{ques:7}
     \begin{question}
         Let
-        $$AMB_{CFG} = \{ <G> | G \text{ is an ambiguous CFG } \}$$
+        $$AMB_{CFG} = \{ \langle G\rangle | G \text{ is an ambiguous CFG } \}$$
         Show that $AMB_{CFG}$ is undecidable via a reduction from PCP.
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
-        sol
+        To show: $AMB_{CFG}$ is undecidable\\
+        Let an instance from PCP be defined as follows
+        \begin{equation}
+        \left\{  \left[\frac{t_1}{b_1}\right], \left[\frac{t_2}{b_2}\right], \dots, \left[\frac{t_k}{b_k}\right]  \right\}
+        \end{equation}
+        Let us generate a corresponding CFG $G$ with the rules:
+        \begin{equation}
+        \begin{split}
+            & S \rightarrow T|B  \\
+            & T \rightarrow t_1Ta_1 |\dots|t_k T a_k|t_1 a_1|\dots|t_k a_k \\
+            & B \rightarrow b_1Ba_1 |\dots|b_k B a_k|b_1 a_1|\dots|b_k a_k
+        \end{split}
+        \end{equation}
+        where $a_1, \dots a_k$ are new terminal symbols.\\
+        We now need to show the following:
+        \begin{enumerate}
+            \item \textbf{$G$ is ambiguous $\implies$ $P$ has a solution}: This is easy to see since the only two productions of $S$ are via $T$ or $B$. Therefore, the ambiguity can arise only if both these non-terminals yield the same word. Therefore, the following holds true:
+            \begin{equation}
+                \begin{split}
+                    &t_{i_1}t_{i_2}\cdots t_{i_m}a_{i_m}a_{i_{m-1}}\cdots a_{i_1} = b_{i_1}b_{i_2}\cdots b_{i_m}a_{i_m}a_{i_{m-1}}\cdots a_{i_1}\\
+                    \implies &t_{i_1}t_{i_2}\cdots t_{i_m} = b_{i_1}b_{i_2}\cdots b_{i_m}
+                \end{split}
+            \end{equation}
+            This is exactly the same as the solution for a PCP. Therefore, if $G$ is ambiguous, then $P$ has a solution.
+            \item \textbf{$P$ has a solution $\implies$ $G$ is ambiguous}: Consider the solution for $P$. We will now transform the solution into a word in $L(G)$ which has multiple derivations:
+            \begin{equation}
+                \begin{split}
+                    &t_{i_1}t_{i_2}\cdots t_{i_m} = b_{i_1}b_{i_2}\cdots b_{i_m}\\
+                    \implies &t_{i_1}t_{i_2}\cdots t_{i_m}a_{i_m}a_{i_{m-1}}\cdots a_{i_1} = b_{i_1}b_{i_2}\cdots b_{i_m}a_{i_m}a_{i_{m-1}}\cdots a_{i_1}
+                \end{split}
+            \end{equation}
+            As shown above, this string has multiple derivations in $G$. Therefore, the language of $G$ is ambiguous.
+        \end{enumerate}
+        Therefore, we have shown that the problem of solving $P$ is same as deciding whether $G$ is ambiguous. Since we have reduced every instance of PCP to a an instance of $AMB_{CFG}$ and we know that PCP is undecidable, therefore, $AMB_{CFG}$ is also undecidable.
+        \begin{center}
+        \textit{Hence Proved}
+        \end{center}
+        \textit{PS: We have taken reference from the hint given in Sipser for this problem.}
     \end{proof}
 \end{solution}

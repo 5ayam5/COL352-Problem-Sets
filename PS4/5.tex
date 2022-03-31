@@ -7,19 +7,19 @@
         Consider the language $L_{TM}$ defined as
         \begin{equation}
             \begin{split}
-                L_{TM}  &= \{<M, w> | \\
+                L_{TM}  &= \{\langle M, w\rangle | \\
                         &M \text{ attempts to move its head left when its head is on the left most cell on input } w\}
             \end{split}
         \end{equation}
         
-        Let's assume that the language $L_{TM}$ is decidable and Turing machine $R$ decides it. $R$ takes $<M, w>$ as input and accept if $M$'s tape head attempts to move left when it is on the left most tape cell, else it rejects. Now, consider the following Turing machine $S$ for language $A_{TM}$. It works as:
+        Let's assume that the language $L_{TM}$ is decidable and Turing machine $R$ decides it. $R$ takes $\langle M, w\rangle$ as input and accept if $M$'s tape head attempts to move left when it is on the left most tape cell, else it rejects. Now, consider the following Turing machine $S$ for language $A_{TM}$. It works as:
         
         \bigskip
         
-        $S$ = "On input $<M, w>$, where $M$ is a Turing machine and $w$ is a string:
+        $S$ = "On input $\langle M, w\rangle$, where $M$ is a Turing machine and $w$ is a string:
         \begin{enumerate}
             \item Construct Turing machine $M_1$ using $M$ and $w$ according to definition given below.
-            \item Simulate $R$ on input $<M_1, w>$
+            \item Simulate $R$ on input $\langle M_1, w\rangle$
             \item If $R$ accepts then accept else reject.
         \end{enumerate}
         

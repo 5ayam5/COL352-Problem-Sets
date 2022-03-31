@@ -43,7 +43,7 @@
       \end{algorithm}
       We claim that $T_{decidable}$ is a Turing machine and decidable. For this, we first prove that Algorithm~\ref{alg:1.1} is correct and terminates. For correctness, notice that the while loop exits only if $|curr_w| \geq n$ and thus the length of the string in $w$ after the termination of the while loop is at least $n$. Therefore, the final returned value is the first string enumerated with length equal to $n$ (such that all strings before are of smaller length) or $\epsilon$.\par
       For termination, notice that there are only a finite possibilities before $E$ enumerates a string with length $\geq n$. Therefore, the while loop terminates after a finite number of iterations.\par
-      We have shown that Algorithm~\ref{alg:1.1} is decidable since it halts. Therefore, the string $w'$ in ALgorithm~\ref{alg:1.2} is generated in finite number of steps. The comparison of $w'$ and $w$ also completes in finite steps. Therefore, Algorithm~\ref{alg:1.2} accepts or rejects $w$ in finite number of steps. Therefore, $T_{decidable}$ is a decidable Turing machine.\par
+      We have shown that Algorithm~\ref{alg:1.1} is decidable since it halts. Therefore, the string $w'$ in Algorithm~\ref{alg:1.2} is generated in finite number of steps. The comparison of $w'$ and $w$ also completes in finite steps. Therefore, Algorithm~\ref{alg:1.2} accepts or rejects $w$ in finite number of steps. Therefore, $T_{decidable}$ is a decidable Turing machine.\par
       We also need to show that $T_{decidable}$ recognizes an infinite language. This is obvious since $L$ is infinite and therefore the following set forms an infinite sequence:
       \begin{equation}
         \{i | \forall i \in \mathbb{N}: EnumerateFirst(E, i) \neq \epsilon\}

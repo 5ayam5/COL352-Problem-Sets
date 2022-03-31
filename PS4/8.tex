@@ -1,9 +1,31 @@
 \begin{solution}{Question 8}\label{ques:8}
     \begin{question}
-        in the Silly Post Correspondence Problem (SPCP), the top string in each pair has the same length as the bottom string. Show that SPCP is decidable.
+        In the Silly Post Correspondence Problem (SPCP), the top string in each pair has the same length as the bottom string. Show that SPCP is decidable.
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
-        sol
+        To Show if a language is decidable, we need to show that for every input, either the input is accepted or reject and the machine halts in finite time.\\
+        For the given problem, on analysis we were able to find an algorithm which accepts or rejects an input. Since we can find an algorithm, the language is decidable. The algorithm and the proof of correctness are as follows:
+        \begin{algorithm}[H]
+          \caption{SPCP}
+          \label{alg:8}
+          \begin{algorithmic}[1]
+            \Procedure{SPCP}{$D$} \Comment{D is set of dominoes}
+            \For{$domino$ in $D$}
+              \If{$domino.num = domino.denom$} \Comment{numerator and denominator}
+                \State{\Return{accept}}
+              \EndIf{}
+            \EndFor{}
+            \State{\Return{reject}}
+            \EndProcedure{}
+          \end{algorithmic}
+        \end{algorithm}
+        \textbf{Proof of termination:} We are using a for loop and the number of dominoes is finite so the algorithm terminates.\\
+        \\
+        \textbf{Proof of Correctness:} Proof by deduction\\
+        For SPCP, $|num|= |denom|$ for all present dominoes. Let us consider a solution $(i_1, i_2, ..., i_m)$ for some set of dominoes. Since numerator = denominator and $|num|= |denom|$ for all dominoes, it can be deduced that $(n_i)_1 = (d_i)_1$, $(n_i)_2 = (d_i)_2$ and so on. This implies that there exists at least one domino such that $n_i = d_i$ for the solution to exist. Since the number of dominoes are finite, both the acceptance and rejection of the input can be decided in finite time. Which means that SPCP is Turing Decidable.
+        \begin{center}
+        \textit{Hence Proved}
+        \end{center}
     \end{proof}
 \end{solution}

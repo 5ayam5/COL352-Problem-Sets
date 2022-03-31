@@ -9,13 +9,13 @@
         \bigskip
         
         We use this algorithm to design a Turing machine $R$ which decides the following language $U_{TM}$.
-        \[U_{TM} = \{<G, A> | A \text{ is a variable which is \emph{usable} in } G \}\]
+        \[U_{TM} = \{\langle G, A\rangle | A \text{ is a variable which is \emph{usable} in } G \}\]
         
         Turing machine $R$ works as following:
         
         \bigskip
         
-        $S$ = "On input $<G, A>$, where $G$ is a grammar and $A$ a variable in $G$:
+        $S$ = "On input $\langle G, A\rangle$, where $G$ is a grammar and $A$ a variable in $G$:
         \begin{enumerate}
             \item Mark all terminal symbol in $G$.
             \item Repeat until no new symbol is marked with ``$^\cdot$":
@@ -34,7 +34,7 @@
         In other case if $A$ is marked, we find out the variables $X$ who can derive a string $Y_1Y_2Y_3...Y_k$ such that at least one of the $Y_i$ is $A$ and rest all can also generate a string of terminals. After all such variables are marked, we check if start symbol $S$ is marked as $\underline{\dot{S}}$. If yes, then it means start symbol can generate a string $w$ whose derivation contains a string in which variable $A$ is present.
         
         
-        The Turing machine $R$ always decides input $<G, A>$ as the algorithm terminates.
+        The Turing machine $R$ always decides input $\langle G, A\rangle$ as the algorithm terminates.
         \\
         Thus, the language $U_{TM}$ is decidable.
     \end{proof}
