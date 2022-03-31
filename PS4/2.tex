@@ -3,7 +3,28 @@
         Show that single-tape TMs that cannot write on the portion of the tape containing the input string recognize only regular languages.
     \end{question}
     \tcblower{}
-    \begin{proof}[Solution]
-        sol
+    \begin{proof}
+        Define the following function $f_w$ for such a Turing machine $M$ and input $w$:
+        \begin{equation}
+          \begin{split}
+            f_w(q) &= q',\text{ when }M\text{ enters the input portion on }q\text{ and exits the input portion on }q'\\
+            f_w(q) &= q_{accept},\text{if }M\text{enters input portion on }q\text{, never exits and accepts }w\\
+            f_w(q) &= q_{reject},\text{if }M\text{enters input portion on }q\text{, never exits and rejects }w
+          \end{split}
+        \end{equation}
+        It is easy to see that acceptance is decidable if $M$ doesn't exit the input portion. This is because there are only a finite number of states $|Q|$ and a finite number of positions $|w|$. Therefore, if $w$ isn't accepted within $|Q|^{|w|}$ steps after entering the input portion, we can reject $w$.\par
+        We consider the following equivalence relation:
+        \begin{equation}
+          [x] \equiv [y] \iff f_x = f_y
+        \end{equation}
+        It is easy to see that this equivalence relation has a finite number of equivalence classes since total number of functions are $|Q|^{|Q|+2}$. We will now show that this relation also satisfies the property of right congruence:
+        \begin{equation}
+          \begin{split}
+            &[x] \equiv [y] \\
+            \implies &\text{every time }M\text{ goes from position }|w|\text{ to }|w|+1,\text{ it is at the same state for both }x, y\\
+            \implies &[xa] \equiv [ya]
+          \end{split}
+        \end{equation}
+        Therefore, $f_w$ defines an equivalence, right congruent relation with finite classes. Therefore, by Myhil-Nehrode theorem, $M$ recongizes only regular languages.
     \end{proof}
 \end{solution}
