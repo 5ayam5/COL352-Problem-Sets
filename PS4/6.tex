@@ -1,9 +1,20 @@
 \begin{solution}{Question 6}\label{ques:6}
     \begin{question}
-        ques
+        Consider the problem of determining whether a Turing machine $M$ on an input $w$ ever attempts to move its head left at any point during its computation on $w$. Formulate this problem as a language and show that it is decidable.
     \end{question}
     \tcblower{}
     \begin{proof}[Solution]
-        sol
+        Consider the language $L_{TM}$ defined as
+        \[L_{TM} = \{<M, w> | M \text{ attempts to move left in computation of } w\}\]
+        Here $L_{TM}$ is a set of encoding of Turing machine $M$ and string w such that head in $M$ tries to move left at any point in computation of $w$.
+        \\    
+        We will construct as Turing machine $R$ such that on input $<M, w>$, it rejects if head always moves right on tape on simulating $M$ on w. We do so by maintaining a second tape on which we maintain a set of transition rules of $M$ applied till yet while simulating $M$ on w on tape 1. Consider the the following cases where $R$ halts and accepts/rejects input.
+        \begin{enumerate}
+            \item As soon as M transitions using a rule in which head on tape 1 moves lefts, $R$ accepts the input $<M, w>$ else reject if $M$ enters into accepts or reject state.
+            \item $M$'s head continue moving right forever. In this case it will keep reading empty symbols on tape and keep moving right. As the number of states are finite so there will exist a rule in which state repeats and head points to again empty symbol. This is a loop and $M$ will never halt in this case. Using tape 2 we can identify repetition of such rule and thus $R$ rejects such input.
+        \end{enumerate}
+        Above case and exhaustive and exclusive, so $R$ will accept the input $<M, w>$ when M's head attempts to move left in computation on $w$ else reject. It will always enter into accept or reject state as we have correctly identify the case where $M$ continues moving right and never halts.
+        \\
+        Since, $R$ is a Turing machine that decides $L_{TM}$, so we can conclude that $L_{TM}$ is a decidable language.
     \end{proof}
 \end{solution}
